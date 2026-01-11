@@ -6,13 +6,22 @@ import html2canvas from "html2canvas";
 const formatDisplayDate = (dateString) => {
   if (!dateString) return "";
   const dateObj = new Date(dateString + "T00:00:00");
-  const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
   return new Intl.DateTimeFormat("id-ID", options).format(dateObj);
 };
 
 function App() {
-  const [title, setTitle] = useState("Progress Pembangunan SPPG Hans Satya Dharma");
-  const [address, setAddress] = useState("Pulutan, Watukumpul, Parakan, Temanggung");
+  const [title, setTitle] = useState(
+    "Progress Pembangunan SPPG Hans Satya Dharma"
+  );
+  const [address, setAddress] = useState(
+    "Pulutan, Watukumpul, Parakan, Temanggung"
+  );
   const [date, setDate] = useState("2026-01-11");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
@@ -39,7 +48,10 @@ function App() {
 
     try {
       setIsDownloading(true); // mulai loader
-      const canvas = await html2canvas(captureRef.current, { useCORS: true, scale: 2 });
+      const canvas = await html2canvas(captureRef.current, {
+        useCORS: true,
+        scale: 2,
+      });
       const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataUrl;
@@ -56,15 +68,25 @@ function App() {
 
   return (
     <div className="p-4 sm:p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-center text-2xl font-bold pb-5 ">Progress Report Downloader</h1>
-
+      <div>
+        <h1 className="text-center text-2xl font-bold  ">
+          Progress Report Downloader
+        </h1>
+        <h3 className="text-center pb-5 ">
+          Untuk hasil maksimal, gunakan web layout / Desktop site (Bukan Layout Mobile)
+        </h3>
+      </div>
       {/* Form Section */}
       <div className="max-w-3xl mx-auto mt-4 p-4 sm:p-6 bg-white shadow-xl rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">Masukkan Informasi & Gambar</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          Masukkan Informasi & Gambar
+        </h2>
 
         <div className="space-y-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Judul</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Judul
+            </label>
             <input
               type="text"
               placeholder="Judul"
@@ -75,7 +97,9 @@ function App() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Alamat</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Alamat
+            </label>
             <input
               type="text"
               placeholder="Alamat"
@@ -86,7 +110,9 @@ function App() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Tanggal</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Tanggal
+            </label>
             <input
               type="date"
               value={date}
@@ -96,7 +122,9 @@ function App() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Keterangan</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Keterangan
+            </label>
             <textarea
               placeholder="Keterangan (Opsional)"
               value={description}
@@ -107,7 +135,9 @@ function App() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Upload Gambar</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Upload Gambar
+            </label>
             <input
               type="file"
               accept="image/*"
@@ -123,7 +153,9 @@ function App() {
             onClick={handleDownloadImage}
             disabled={isDownloading}
             className={`w-full text-white font-bold py-2 px-4 rounded ${
-              isDownloading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+              isDownloading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
             {isDownloading ? (
@@ -163,15 +195,23 @@ function App() {
         ref={captureRef}
       >
         <div className="mb-4 flex justify-between items-baseline text-sm text-gray-600">
-          <p><strong>Alamat:</strong> {address}</p>
-          <p><strong>Tanggal:</strong> {formatDisplayDate(date)}</p>
+          <p>
+            <strong>Alamat:</strong> {address}
+          </p>
+          <p>
+            <strong>Tanggal:</strong> {formatDisplayDate(date)}
+          </p>
         </div>
 
         <header className="mb-5 pt-4">
-          <h1 className="text-3xl text-center font-extrabold text-gray-800 uppercase tracking-wider">{title}</h1>
+          <h1 className="text-3xl text-center font-extrabold text-gray-800 uppercase tracking-wider">
+            {title}
+          </h1>
         </header>
 
-        {description && <p className="mb-5 text-gray-700 italic">{description}</p>}
+        {description && (
+          <p className="mb-5 text-gray-700 italic">{description}</p>
+        )}
 
         {images.length > 0 ? (
           <div className="grid grid-cols-4 gap-1">
@@ -195,10 +235,14 @@ function App() {
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-500 py-8">Belum ada gambar yang diupload.</p>
+          <p className="text-center text-gray-500 py-8">
+            Belum ada gambar yang diupload.
+          </p>
         )}
       </div>
-      <div className="text-sm flex justify-end text-gray-500">Copyright © 2026 Jee</div>
+      <div className="text-sm flex justify-end text-gray-500">
+        Copyright © 2026 Jee
+      </div>
     </div>
   );
 }
