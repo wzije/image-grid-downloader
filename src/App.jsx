@@ -200,21 +200,25 @@ function App() {
             {title}
           </h1>
         </header>
-        <div className="mx-auto mb-2 text-xs text-gray-600 md:text-sm">
+        <div className="mx-auto mb-5 text-xs text-gray-600 md:text-sm">
           <p>
             <strong>Tanggal:</strong> {formatDisplayDate(date)}
           </p>
           <p>
             <strong>Alamat:</strong> {address}
           </p>
+          {description && (
+            <div>
+              <strong>Keterangan:</strong>
+              <p
+                className="italic text-gray-700 "
+                style={{ whiteSpace: "pre-wrap" }}
+              >
+                {description}
+              </p>
+            </div>
+          )}
         </div>
-
-        {description && (
-          <div className="mb-4 text-xs italic text-gray-700">
-            Keterangan:
-            <p style={{ whiteSpace: "pre-wrap" }}>{description}</p>
-          </div>
-        )}
 
         {images.length > 0 ? (
           <div className="grid grid-cols-4 gap-1">
