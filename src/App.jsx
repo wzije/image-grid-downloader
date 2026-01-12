@@ -74,7 +74,7 @@ function App() {
           Progress Report Generator
         </h1>
         <p className="pb-5 text-sm text-center text-gray-500">
-          *Untuk hasil maksimal, gunakan mode desktop (Desktop Site)
+          Isi form, upload gambar, dan download hasilnya.
         </p>
       </div>
       {/* Form Section */}
