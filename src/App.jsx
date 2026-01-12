@@ -1,19 +1,9 @@
 // src/App.jsx
 import React, { useState, useRef } from "react";
-import html2canvas from "html2canvas";
-
-// Helper function untuk memformat tanggal
-const formatDisplayDate = (dateString) => {
-  if (!dateString) return "";
-  const dateObj = new Date(dateString + "T00:00:00");
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  return new Intl.DateTimeFormat("id-ID", options).format(dateObj);
-};
+import { useDownloader } from "./hooks/useDownloader";
+import ActionButtons from "./components/ActionButton";
+import CaptureArea from "./components/CaptureArea";
+import Footer from "./components/Footer";
 
 function App() {
   const [title, setTitle] = useState(
@@ -26,9 +16,17 @@ function App() {
   const [date, setDate] = useState(currentDate);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const [isDownloading, setIsDownloading] = useState(false);
+  const [isImageDownloading, setIsImageDownloading] = useState(false);
+  const [isVideoCreating, setIsVideoCreating] = useState(false);
 
   const captureRef = useRef(null);
+
+  // song / audio
+  const [songs] = useState(
+    Array.from({ length: 6 }, (_, i) => `/sounds/audio_00${i}.mp3`)
+  );
+  const [selectedSong, setSelectedSong] = useState(songs[0]);
+  const audioRef = useRef(null);
 
   const handleImageUpload = (event) => {
     const files = Array.from(event.target.files);
@@ -44,41 +42,15 @@ function App() {
     });
   };
 
-  const handleDownloadImage = async () => {
-    if (!captureRef.current) return;
-
-    try {
-      setIsDownloading(true); // mulai loader
-      const canvas = await html2canvas(captureRef.current, {
-        useCORS: true,
-        scale: 10, // Tingkatkan ke 3 atau 4 untuk kualitas cetak (resolusi tinggi)
-        logging: false,
-        backgroundColor: "#ffffff", // Memastikan background tidak transparan/pecah
-        windowWidth: captureRef.current.scrollWidth,
-        windowHeight: captureRef.current.scrollHeight,
-        onclone: (clonedDoc) => {
-          // Opsional: Pastikan elemen terlihat di kloningan
-          clonedDoc
-            .getElementById("capture-area")
-            ?.style.setProperty("display", "block");
-        },
-      });
-      const dataUrl = canvas.toDataURL("image/png", 1.0);
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `${title.replace(
-        /\s+/g,
-        "_"
-      )}_pembangunan_sppg_${currentDate}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Download gagal:", error);
-    } finally {
-      setIsDownloading(false); // hentikan loader
-    }
-  };
+  const { handleDownloadImage, createVideo } = useDownloader(
+    captureRef,
+    title,
+    date,
+    audioRef,
+    selectedSong,
+    setIsImageDownloading,
+    setIsVideoCreating
+  );
 
   return (
     <div className="min-h-screen p-4 bg-gray-100 sm:p-8">
@@ -163,115 +135,36 @@ function App() {
         </div>
 
         {images.length > 0 && (
-          <button
-            onClick={handleDownloadImage}
-            disabled={isDownloading}
-            className={`w-full text-white font-bold py-2 px-4 rounded ${
-              isDownloading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
-            }`}
-          >
-            {isDownloading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg
-                  className="w-5 h-5 text-white animate-spin"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
-                </svg>
-                Mengunduh...
-              </span>
-            ) : (
-              "Unduh Hasil Generate"
-            )}
-          </button>
+          <div>
+            <ActionButtons
+              onDownload={handleDownloadImage}
+              onVideo={createVideo}
+              isImageLoading={isImageDownloading}
+              isVideoLoading={isVideoCreating}
+              songs={songs}
+              selectedSong={selectedSong}
+              setSelectedSong={setSelectedSong}
+              audioRef={audioRef}
+            />
+          </div>
         )}
       </div>
 
       {/* Capture Area */}
-      <div
-        className="max-w-3xl p-2 mx-auto mt-4 bg-white rounded-md"
+      <CaptureArea
         ref={captureRef}
-      >
-        <header className="mb-3">
-          <h1 className="text-lg font-extrabold tracking-wider text-center text-gray-800 uppercase md:text-3xl">
-            {title}
-          </h1>
-        </header>
-        <div className="mx-auto mb-5 text-xs text-gray-600 md:text-sm">
-          <p>
-            <strong>Tanggal:</strong> {formatDisplayDate(date)}
-          </p>
-          <p>
-            <strong>Alamat:</strong> {address}
-          </p>
-          {description && (
-            <div>
-              <strong>Keterangan:</strong>
-              <p
-                className="italic text-gray-700 "
-                style={{ whiteSpace: "pre-wrap" }}
-              >
-                {description}
-              </p>
-            </div>
-          )}
-        </div>
+        title={title}
+        date={date}
+        address={address}
+        description={description}
+        images={images}
+      />
 
-        {images.length > 0 ? (
-          <div className="grid grid-cols-4 gap-1">
-            {images.map((image, index) => (
-              <div
-                key={image.id}
-                className={`relative overflow-hidden ${
-                  index === 0 || index === 3 || index === 8
-                    ? "col-span-2 row-span-2"
-                    : "col-span-1 row-span-1"
-                }`}
-              >
-                <img
-                  src={image.url}
-                  alt={`Uploaded memory ${index + 1}`}
-                  className="object-cover w-full h-full rounded-md"
-                  crossOrigin="anonymous"
-                />
-                <div className="absolute inset-0 bg-black rounded-md opacity-10"></div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="py-8 text-center text-gray-500">
-            Belum ada gambar yang diupload.
-          </p>
-        )}
-      </div>
+      {/* Audio */}
+      <audio ref={audioRef} preload="auto" crossOrigin="anonymous" />
+
       {/* Footer */}
-      <footer className="pt-6 mt-auto text-sm text-center text-gray-500">
-        Copyright © 2026. All rights reserved. <br />
-        Developed by{" "}
-        <a
-          target="_blank"
-          className="text-blue-600"
-          href="https://wzije.pages.dev"
-        >
-          Jehan{" "}
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }
