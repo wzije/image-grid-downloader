@@ -196,12 +196,12 @@ function App() {
         ref={captureRef}
       >
         <header className="mb-5 ">
-          <h1 className="text-xl font-extrabold tracking-wider text-center text-gray-800 uppercase lg:text-3xl">
+          <h1 className="text-lg font-extrabold tracking-wider text-center text-gray-800 uppercase md:text-3xl">
             {title}
           </h1>
         </header>
 
-        <div className="mx-auto mb-4 text-sm text-gray-600 ">
+        <div className="mx-auto mb-4 text-xs text-gray-600 md:text-sm">
           <p>
             <strong>Tanggal:</strong> {formatDisplayDate(date)}
           </p>
@@ -211,7 +211,7 @@ function App() {
         </div>
 
         {description && (
-          <p className="mb-5 text-sm italic text-gray-700">{description}</p>
+          <p className="mb-5 text-xs italic text-gray-700">{description}</p>
         )}
 
         {images.length > 0 ? (
