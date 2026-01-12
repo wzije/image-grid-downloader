@@ -196,12 +196,12 @@ function App() {
         ref={captureRef}
       >
         <header className="mb-5 ">
-          <h1 className="text-xl font-extrabold tracking-wider text-center text-gray-800 uppercase">
+          <h1 className="text-xl font-extrabold tracking-wider text-center text-gray-800 uppercase lg:text-3xl">
             {title}
           </h1>
         </header>
 
-        <div className="mx-auto mb-4 text-sm text-gray-600">
+        <div className="mx-auto mb-4 text-sm text-gray-600 ">
           <p>
             <strong>Tanggal:</strong> {formatDisplayDate(date)}
           </p>
