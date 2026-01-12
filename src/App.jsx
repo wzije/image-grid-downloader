@@ -56,7 +56,7 @@ function App() {
       const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataUrl;
-      link.download = `${title.replace(/\s+/g, "_")}_memories.png`;
+      link.download = `${title.replace(/\s+/g, "_")}_pembangunan_sppg_${currentDate}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -192,7 +192,7 @@ function App() {
 
       {/* Capture Area */}
       <div
-        className="max-w-3xl p-4 mx-auto mt-4 bg-white rounded-lg shadow-xl sm:p-6"
+        className="max-w-3xl p-4 mx-auto mt-4 bg-white sm:p-6"
         ref={captureRef}
       >
         <header className="mb-5 ">
@@ -228,10 +228,10 @@ function App() {
                 <img
                   src={image.url}
                   alt={`Uploaded memory ${index + 1}`}
-                  className="object-cover w-full h-full rounded-lg"
+                  className="object-cover w-full h-full rounded-md"
                   crossOrigin="anonymous"
                 />
-                <div className="absolute inset-0 bg-black rounded-lg opacity-10"></div>
+                <div className="absolute inset-0 bg-black rounded-md opacity-10"></div>
               </div>
             ))}
           </div>
