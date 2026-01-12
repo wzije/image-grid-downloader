@@ -51,7 +51,7 @@ function App() {
       setIsDownloading(true); // mulai loader
       const canvas = await html2canvas(captureRef.current, {
         useCORS: true,
-        scale: 4, // Tingkatkan ke 3 atau 4 untuk kualitas cetak (resolusi tinggi)
+        scale: 10, // Tingkatkan ke 3 atau 4 untuk kualitas cetak (resolusi tinggi)
         logging: false,
         backgroundColor: "#ffffff", // Memastikan background tidak transparan/pecah
         windowWidth: captureRef.current.scrollWidth,
