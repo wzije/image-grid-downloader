@@ -56,7 +56,10 @@ function App() {
       const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataUrl;
-      link.download = `${title.replace(/\s+/g, "_")}_pembangunan_sppg_${currentDate}.png`;
+      link.download = `${title.replace(
+        /\s+/g,
+        "_"
+      )}_pembangunan_sppg_${currentDate}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -184,24 +187,20 @@ function App() {
                 Mengunduh...
               </span>
             ) : (
-              "Download Grid as PNG Image"
+              "Unduh Hasil Generate"
             )}
           </button>
         )}
       </div>
 
       {/* Capture Area */}
-      <div
-        className="max-w-3xl p-4 mx-auto mt-4 bg-white sm:p-6"
-        ref={captureRef}
-      >
-        <header className="mb-5 ">
+      <div className="max-w-3xl p-2 mx-auto mt-4 bg-white" ref={captureRef}>
+        <header className="mb-3">
           <h1 className="text-lg font-extrabold tracking-wider text-center text-gray-800 uppercase md:text-3xl">
             {title}
           </h1>
         </header>
-
-        <div className="mx-auto mb-4 text-xs text-gray-600 md:text-sm">
+        <div className="mx-auto mb-2 text-xs text-gray-600 md:text-sm">
           <p>
             <strong>Tanggal:</strong> {formatDisplayDate(date)}
           </p>
@@ -211,7 +210,10 @@ function App() {
         </div>
 
         {description && (
-          <p className="mb-5 text-xs italic text-gray-700">{description}</p>
+          <div className="mb-4 text-xs italic text-gray-700">
+            Keterangan:
+            <p style={{ whiteSpace: "pre-wrap" }}>{description}</p>
+          </div>
         )}
 
         {images.length > 0 ? (
@@ -243,7 +245,8 @@ function App() {
       </div>
       {/* Footer */}
       <footer className="pt-6 mt-auto text-sm text-center text-gray-500">
-        Copyright © 2026. All rights reserved. Developed by{" "}
+        Copyright © 2026. All rights reserved. <br />
+        Developed by{" "}
         <a
           target="_blank"
           className="text-blue-600"
