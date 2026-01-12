@@ -71,7 +71,7 @@ function App() {
     <div className="p-4 sm:p-8 bg-gray-100 min-h-screen">
       <div>
         <h1 className="text-center text-2xl font-bold  ">
-          Progress Report Downloader
+          Progress Report Generator
         </h1>
         <p className="text-center pb-5 text-gray-500 text-sm">
           *Untuk hasil maksimal, gunakan mode desktop (Desktop Site)
