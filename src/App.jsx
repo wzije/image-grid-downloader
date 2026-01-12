@@ -22,7 +22,8 @@ function App() {
   const [address, setAddress] = useState(
     "Pulutan, Watukumpul, Parakan, Temanggung"
   );
-  const [date, setDate] = useState("2026-01-11");
+  const currentDate = new Date().toISOString().split("T")[0];
+  const [date, setDate] = useState(currentDate);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -72,9 +73,9 @@ function App() {
         <h1 className="text-center text-2xl font-bold  ">
           Progress Report Downloader
         </h1>
-        <h3 className="text-center pb-5 ">
-          Untuk hasil maksimal, gunakan web layout / Desktop site (Bukan Layout Mobile)
-        </h3>
+        <p className="text-center pb-5 text-gray-500 text-sm">
+          *Untuk hasil maksimal, gunakan mode desktop (Desktop Site)
+        </p>
       </div>
       {/* Form Section */}
       <div className="max-w-3xl mx-auto mt-4 p-4 sm:p-6 bg-white shadow-xl rounded-lg">
@@ -240,9 +241,17 @@ function App() {
           </p>
         )}
       </div>
-      <div className="text-sm flex justify-end text-gray-500">
-        Copyright © 2026 Jee
-      </div>
+      {/* Footer */}
+      <footer className="mt-auto text-center text-gray-500 text-sm pt-6">
+        Copyright © 2026. All rights reserved. Developed by{" "}
+        <a
+          target="_blank"
+          className="text-blue-600"
+          href="https://wzije.pages.dev"
+        >
+          Jehan{" "}
+        </a>
+      </footer>
     </div>
   );
 }
