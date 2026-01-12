@@ -51,9 +51,19 @@ function App() {
       setIsDownloading(true); // mulai loader
       const canvas = await html2canvas(captureRef.current, {
         useCORS: true,
-        scale: 2,
+        scale: 3, // Tingkatkan ke 3 atau 4 untuk kualitas cetak (resolusi tinggi)
+        logging: false,
+        backgroundColor: "#ffffff", // Memastikan background tidak transparan/pecah
+        windowWidth: captureRef.current.scrollWidth,
+        windowHeight: captureRef.current.scrollHeight,
+        onclone: (clonedDoc) => {
+          // Opsional: Pastikan elemen terlihat di kloningan
+          clonedDoc
+            .getElementById("capture-area")
+            ?.style.setProperty("display", "block");
+        },
       });
-      const dataUrl = canvas.toDataURL("image/png");
+      const dataUrl = canvas.toDataURL("image/png", 1.0);
       const link = document.createElement("a");
       link.href = dataUrl;
       link.download = `${title.replace(
@@ -194,7 +204,10 @@ function App() {
       </div>
 
       {/* Capture Area */}
-      <div className="max-w-3xl p-2 mx-auto mt-4 bg-white" ref={captureRef}>
+      <div
+        className="max-w-3xl p-2 mx-auto mt-4 bg-white rounded-md"
+        ref={captureRef}
+      >
         <header className="mb-3">
           <h1 className="text-lg font-extrabold tracking-wider text-center text-gray-800 uppercase md:text-3xl">
             {title}

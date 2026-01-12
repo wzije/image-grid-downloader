@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+img {
+  image-rendering: -webkit-optimize-contrast; /* Untuk Chrome/Safari */
+  image-rendering: crisp-edges;
+}
