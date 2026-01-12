@@ -68,22 +68,22 @@ function App() {
   };
 
   return (
-    <div className="p-4 sm:p-8 bg-gray-100 min-h-screen">
+    <div className="min-h-screen p-4 bg-gray-100 sm:p-8">
       <div>
-        <h1 className="text-center text-2xl font-bold  ">
+        <h1 className="text-2xl font-bold text-center ">
           Progress Report Generator
         </h1>
-        <p className="text-center pb-5 text-gray-500 text-sm">
+        <p className="pb-5 text-sm text-center text-gray-500">
           *Untuk hasil maksimal, gunakan mode desktop (Desktop Site)
         </p>
       </div>
       {/* Form Section */}
-      <div className="max-w-3xl mx-auto mt-4 p-4 sm:p-6 bg-white shadow-xl rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">
+      <div className="max-w-3xl p-4 mx-auto mt-4 bg-white rounded-lg shadow-xl sm:p-6">
+        <h2 className="mb-4 text-xl font-semibold">
           Masukkan Informasi & Gambar
         </h2>
 
-        <div className="space-y-4 mb-4">
+        <div className="mb-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Judul
@@ -93,7 +93,7 @@ function App() {
               placeholder="Judul"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="block w-full border p-2"
+              className="block w-full p-2 border"
             />
           </div>
 
@@ -106,7 +106,7 @@ function App() {
               placeholder="Alamat"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="block w-full border p-2"
+              className="block w-full p-2 border"
             />
           </div>
 
@@ -118,7 +118,7 @@ function App() {
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="block w-full border p-2"
+              className="block w-full p-2 border"
             />
           </div>
 
@@ -131,7 +131,7 @@ function App() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
-              className="block w-full border p-2"
+              className="block w-full p-2 border"
             ></textarea>
           </div>
 
@@ -162,7 +162,7 @@ function App() {
             {isDownloading ? (
               <span className="flex items-center justify-center gap-2">
                 <svg
-                  className="animate-spin h-5 w-5 text-white"
+                  className="w-5 h-5 text-white animate-spin"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -192,26 +192,26 @@ function App() {
 
       {/* Capture Area */}
       <div
-        className="max-w-3xl mx-auto mt-4 bg-white shadow-xl p-4 sm:p-6 rounded-lg"
+        className="max-w-3xl p-4 mx-auto mt-4 bg-white rounded-lg shadow-xl sm:p-6"
         ref={captureRef}
       >
-        <div className="mb-4 flex justify-between items-baseline text-sm text-gray-600">
-          <p>
-            <strong>Alamat:</strong> {address}
-          </p>
-          <p>
-            <strong>Tanggal:</strong> {formatDisplayDate(date)}
-          </p>
-        </div>
-
-        <header className="mb-5 pt-4">
-          <h1 className="text-3xl text-center font-extrabold text-gray-800 uppercase tracking-wider">
+        <header className="mb-5 ">
+          <h1 className="text-xl font-extrabold tracking-wider text-center text-gray-800 uppercase">
             {title}
           </h1>
         </header>
 
+        <div className="mx-auto mb-4 text-sm text-gray-600">
+          <p>
+            <strong>Tanggal:</strong> {formatDisplayDate(date)}
+          </p>
+          <p>
+            <strong>Alamat:</strong> {address}
+          </p>
+        </div>
+
         {description && (
-          <p className="mb-5 text-gray-700 italic">{description}</p>
+          <p className="mb-5 text-sm italic text-gray-700">{description}</p>
         )}
 
         {images.length > 0 ? (
@@ -228,21 +228,21 @@ function App() {
                 <img
                   src={image.url}
                   alt={`Uploaded memory ${index + 1}`}
-                  className="w-full h-full object-cover rounded-lg"
+                  className="object-cover w-full h-full rounded-lg"
                   crossOrigin="anonymous"
                 />
-                <div className="absolute inset-0 bg-black opacity-10 rounded-lg"></div>
+                <div className="absolute inset-0 bg-black rounded-lg opacity-10"></div>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-500 py-8">
+          <p className="py-8 text-center text-gray-500">
             Belum ada gambar yang diupload.
           </p>
         )}
       </div>
       {/* Footer */}
-      <footer className="mt-auto text-center text-gray-500 text-sm pt-6">
+      <footer className="pt-6 mt-auto text-sm text-center text-gray-500">
         Copyright © 2026. All rights reserved. Developed by{" "}
         <a
           target="_blank"
